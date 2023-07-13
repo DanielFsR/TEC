@@ -67,4 +67,28 @@ class RecipesController < ApplicationController
     def recipe_params
       params.require(:recipe).permit(:id, :name, :link, :image)
     end
+
+    # Supondo que você tenha os modelos `Recipe` e `Ingredient` definidos
+
+# No controller (por exemplo, RecipesController), crie uma ação para a busca de receitas
+def search_recipes
+  # Obtém os ingredientes informados pelo usuários
+
+
+  ingredient_names = params[:ingredients].split(',').map(&:strip)
+
+  # Busca os ingredientes no banco de dados
+  ingredients = Ingredient.where(name: ingredient_names)
+
+  # Obtém as receitas que possuem todos os ingredientes informados
+  recipes = Recipe.joins(:ingredients).where(ingredients: { id: ingredients }).distinct
+
+  # Renderiza as receitas encontradas para o usuário
+  render json: recipes
 end
+
+
+
+end
+
+
