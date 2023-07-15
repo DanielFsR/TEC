@@ -63,8 +63,7 @@ class RecipeIngredientsController < ApplicationController
       @recipes = Recipe.joins(:ingredients).where(ingredients: { id: ingredients }).distinct
   
       render json: @recipes 
-      
-  
+    end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_recipe_ingredient
