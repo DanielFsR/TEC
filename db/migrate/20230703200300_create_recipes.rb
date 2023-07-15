@@ -4,8 +4,6 @@ class CreateRecipes < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :link
       t.string :image
-      t.string :time
-      t.string :dificulty
       t.timestamps
     end
   end
