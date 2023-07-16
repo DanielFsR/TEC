@@ -58,7 +58,22 @@ class RecipesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+  def search_recipes
+
+    # Obtém os ingredientes informados pelo usuários
+    ingredient_names = params[:ingredients].split(',').map(&:strip)
+  
+    # Busca os ingredientes no banco de dados
+    ingredients = Ingredient.where(name: ingredient_names)
+  
+    # Obtém as receitas que possuem todos os ingredientes informados
+    recipes = Recipe.joins(:ingredients).where(ingredients: { id: ingredients }).distinct
+  
+    # Renderiza as receitas encontradas para o usuário
+    render json: recipes
+  end
+  
+    # Use callbacksto share common setup or constraints between actions.
     def set_recipe
       @recipe = Recipe.find(params[:id])
     end
@@ -67,25 +82,6 @@ class RecipesController < ApplicationController
     def recipe_params
       params.require(:recipe).permit(:id, :name, :link, :image, :time, :difficulty)
     end
-
-
-# No controller (por exemplo, RecipesController), crie uma ação para a busca de receitas
-def search_recipes
-  # Obtém os ingredientes informados pelo usuário como um vetor
-  ingredient_names = params[:ingredients].map(&:strip)
-
-  # Busca os ingredientes no banco de dados
-  ingredients = Ingredient.where(name: ingredient_names)
-
-  # Obtém as receitas que possuem todos os ingredientes informados
-  recipes = Recipe.joins(:ingredients).where(ingredients: { id: ingredients }).distinct
-
-  # Renderiza as receitas encontradas para o usuário
-  render json: recipes
-end
-
-
-
 
 end
 

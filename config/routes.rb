@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
-  resources :recipes do
-    collection do
-      post 'search', to: 'recipes#search_recipes'
-    end
+  post 'recipes_search', to: 'recipes#search_recipes'
+
   end  
   resources :recipe_ingredients
   resources :ingredients
