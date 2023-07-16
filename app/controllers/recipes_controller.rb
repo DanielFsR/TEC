@@ -1,6 +1,21 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
 
+  def search_recipes
+    # Obtém os ingredientes informados pelo usuário como um vetor
+    ingredient_names = JSON.parse(request.body)
+  
+    # Busca os ingredientes no banco de dados
+    ingredients = Ingredient.where(name: ingredient_names)
+  
+    # Obtém as receitas que possuem todos os ingredientes informados
+    recipes = Recipe.joins(:ingredients).where(ingredients: { id: ingredients }).distinct
+  
+    # Renderiza as receitas encontradas para o usuário
+    render json: recipes
+  end
+
+
   # GET /recipes or /recipes.json
   def index
     @recipes = Recipe.all
@@ -56,21 +71,8 @@ class RecipesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def search_recipes
-    # Obtém os ingredientes informados pelo usuário como um vetor
-    ingredient_names = JSON.parse(request.body.read)
-
-    #params[:ingredients].map(&:strip)
   
-    # Busca os ingredientes no banco de dados
-    ingredients = Ingredient.where(name: ingredient_names)
   
-    # Obtém as receitas que possuem todos os ingredientes informados
-    recipes = Recipe.joins(:ingredients).where(ingredients: { id: ingredients }).distinct
-  
-    # Renderiza as receitas encontradas para o usuário
-    render json: ingredient_names
-  end
   private
 
     # Use callbacksto share common setup or constraints between actions.
