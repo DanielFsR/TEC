@@ -60,7 +60,9 @@ class RecipesController < ApplicationController
   private
   def search_recipes
     # Obtém os ingredientes informados pelo usuário como um vetor
-    ingredient_names = params[:ingredients].map(&:strip)
+    ingredient_names = JSON.parse(request.body.read)
+
+    #params[:ingredients].map(&:strip)
   
     # Busca os ingredientes no banco de dados
     #ingredients = Ingredient.where(name: ingredient_names)
