@@ -59,19 +59,19 @@ class RecipesController < ApplicationController
 
   private
   def search_recipes
-
-    # Obtém os ingredientes informados pelo usuários
-    ingredient_names = params[:ingredients].split(',').map(&:strip)
+    # Obtém os ingredientes informados pelo usuário como um vetor
+    ingredient_names = params[:ingredients].map(&:strip)
   
     # Busca os ingredientes no banco de dados
-    ingredients = Ingredient.where(name: ingredient_names)
+    #ingredients = Ingredient.where(name: ingredient_names)
   
     # Obtém as receitas que possuem todos os ingredientes informados
-    recipes = Recipe.joins(:ingredients).where(ingredients: { id: ingredients }).distinct
+    #recipes = Recipe.joins(:ingredients).where(ingredients: { id: ingredients }).distinct
   
     # Renderiza as receitas encontradas para o usuário
-    render json: recipes
+    render json: ingredient_names
   end
+  
   
     # Use callbacksto share common setup or constraints between actions.
     def set_recipe
