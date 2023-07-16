@@ -65,16 +65,14 @@ class RecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def recipe_params
-      params.require(:recipe).permit(:id, :name, :link, :image)
+      params.require(:recipe).permit(:id, :name, :link, :image, :time, :difficulty)
     end
 
-    # Supondo que você tenha os modelos `Recipe` e `Ingredient` definidos
 
 # No controller (por exemplo, RecipesController), crie uma ação para a busca de receitas
 def search_recipes
+
   # Obtém os ingredientes informados pelo usuários
-
-
   ingredient_names = params[:ingredients].split(',').map(&:strip)
 
   # Busca os ingredientes no banco de dados

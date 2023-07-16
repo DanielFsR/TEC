@@ -56,15 +56,7 @@ class RecipeIngredientsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-    def search
-      ingredient_names = params[:ingredients].split(',').map(&:strip)
-      ingredients = Ingredient.where(name: ingredient_names)
-      @recipes = Recipe.joins(:ingredients).where(ingredients: { id: ingredients }).distinct
-  
-      render json: @recipes 
-    end
-  private
+     private
     # Use callbacks to share common setup or constraints between actions.
     def set_recipe_ingredient
       @recipe_ingredient = RecipeIngredient.find(params[:id])
