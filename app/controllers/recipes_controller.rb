@@ -71,9 +71,8 @@ class RecipesController < ApplicationController
 
 # No controller (por exemplo, RecipesController), crie uma ação para a busca de receitas
 def search_recipes
-
-  # Obtém os ingredientes informados pelo usuários
-  ingredient_names = params[:ingredients].split(',').map(&:strip)
+  # Obtém os ingredientes informados pelo usuário como um vetor
+  ingredient_names = params[:ingredients].map(&:strip)
 
   # Busca os ingredientes no banco de dados
   ingredients = Ingredient.where(name: ingredient_names)
@@ -84,6 +83,7 @@ def search_recipes
   # Renderiza as receitas encontradas para o usuário
   render json: recipes
 end
+
 
 
 

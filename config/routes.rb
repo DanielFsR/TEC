@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'recipes/search', to: 'recipes#search'
+  post '/recipes/search', to: 'recipes#search'
   resources :recipe_ingredients
   resources :ingredients
   resources :recipes
